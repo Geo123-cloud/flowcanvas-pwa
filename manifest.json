@@ -1,31 +1,25 @@
 {
-  "name": "FlowCanvas Pro - Gestión de Tareas",
+  "name": "FlowCanvas Pro",
   "short_name": "FlowCanvas",
-  "description": "Sistema inteligente de gestión de tareas con IA, reportes automáticos y dictado por voz",
- "start_url": "/webapp-gm-2024/",
-   "scope": "/webapp-gm-2024/",
+  "description": "Sistema inteligente de gestión de tareas",
+  "start_url": "./",
+  "scope": "./",
   "display": "standalone",
   "background_color": "#0a0e1a",
   "theme_color": "#6366f1",
   "orientation": "portrait-primary",
   "icons": [
     {
-      "src": "icon-192.png",
+      "src": "./icon-192.png",
       "sizes": "192x192",
       "type": "image/png",
       "purpose": "any maskable"
     },
     {
-      "src": "icon-512.png",
+      "src": "./icon-512.png",
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "any maskable"
-    },
-    {
-      "src": "icon-180.png",
-      "sizes": "180x180",
-      "type": "image/png",
-      "purpose": "any"
     }
   ],
   "categories": ["productivity", "business"],
