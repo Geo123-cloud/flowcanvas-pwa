@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5">
+  <title>FlowCanvas Pro</title>
+  
+  <!-- PWA Manifest -->
+  <link rel="manifest" href="manifest.json">
+  
+  <!-- Meta Tags PWA -->
+  <meta name="description" content="Sistema inteligente de gestión de tareas con IA, reportes automáticos y dictado por voz">
+  <meta name="theme-color" content="#6366f1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <!-- iOS Meta Tags -->
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="FlowCanvas">
+  
+  <!-- Icons -->
+  <link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
+  <link rel="icon" type="image/png" sizes="512x512" href="icon-512.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="icon-180.png">
+  <link rel="apple-touch-icon" href="icon-180.png">
+  
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    }
+    
+    iframe {
+      width: 100vw;
+      height: 100vh;
+      border: none;
+      display: block;
+    }
+    
+    #loader {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(135deg, #0a0e1a 0%, #1f2937 100%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      z-index: 9999;
+      transition: opacity 0.3s ease-out;
+    }
+    
+    #loader.hide {
+      opacity: 0;
+      pointer-events: none;
+    }
+    
+    .logo {
+      width: 80px;
+      height: 80px;
+      margin-bottom: 30px;
+      background: linear-gradient(135deg, #6366f1 0%, #06b6d4 100%);
+      border-radius: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 10px 30px rgba(99, 102, 241, 0.4);
+    }
+    
+    .logo-text {
+      font-size: 32px;
+      font-weight: 800;
+      color: white;
+      letter-spacing: 2px;
+    }
+    
+    .spinner {
+      width: 50px;
+      height: 50px;
+      border: 4px solid rgba(99, 102, 241, 0.2);
+      border-top-color: #6366f1;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+    }
+    
+    .loading-text {
+      margin-top: 20px;
+      color: #d1d5db;
+      font-size: 14px;
+      font-weight: 500;
+    }
+    
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+    
+    /* Error handling */
+    #error {
+      display: none;
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: #1f2937;
+      padding: 30px;
+      border-radius: 16px;
+      text-align: center;
+      max-width: 400px;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+      z-index: 10000;
+    }
+    
+    #error.show {
+      display: block;
+    }
+    
+    .error-icon {
+      font-size: 48px;
+      margin-bottom: 16px;
+    }
+    
+    .error-title {
+      color: #f9fafb;
+      font-size: 18px;
+      font-weight: 700;
+      margin-bottom: 12px;
+    }
+    
+    .error-message {
+      color: #9ca3af;
+      font-size: 14px;
+      line-height: 1.6;
+      margin-bottom: 20px;
+    }
+    
+    .btn-retry {
+      background: linear-gradient(135deg, #6366f1, #4f46e5);
+      color: white;
+      border: none;
+      padding: 12px 24px;
+      border-radius: 8px;
+      font-weight: 600;
+      cursor: pointer;
+      font-size: 14px;
+    }
+  </style>
+</head>
+<body>
+  <div id="loader">
+    <div class="logo">
+      <span class="logo-text">GM</span>
+    </div>
+    <div class="spinner"></div>
+    <div class="loading-text">Cargando FlowCanvas...</div>
+  </div>
+  
+  <div id="error">
+    <div class="error-icon">⚠️</div>
+    <div class="error-title">Error de conexión</div>
+    <div class="error-message">No se pudo cargar la aplicación. Verifica tu conexión a internet.</div>
+    <button class="btn-retry" onclick="location.reload()">Reintentar</button>
+  </div>
+  
+  <iframe 
+    id="app" 
+    src="https://script.google.com/macros/s/AKfycbzA85V5mSptmLLJBJt3AX2V_2R31Y-cW7rrtx16pVz7QKBXIlI-kH2cST4BQqGljR-1kQ/exec"
+    allow="microphone"
+    sandbox="allow-scripts allow-same-origin allow-forms allow-popups allow-modals"
+    loading="eager">
+  </iframe>
+
+  <script>
+    const iframe = document.getElementById('app');
+    const loader = document.getElementById('loader');
+    const error = document.getElementById('error');
+    let loadTimeout;
+
+    // Timeout de 10 segundos
+    loadTimeout = setTimeout(() => {
+      loader.classList.add('hide');
+      error.classList.add('show');
+    }, 10000);
+
+    iframe.addEventListener('load', () => {
+      clearTimeout(loadTimeout);
+      setTimeout(() => {
+        loader.classList.add('hide');
+      }, 500);
+    });
+
+    iframe.addEventListener('error', () => {
+      clearTimeout(loadTimeout);
+      loader.classList.add('hide');
+      error.classList.add('show');
+    });
+
+    // Prevenir zoom en iOS
+    document.addEventListener('gesturestart', (e) => {
+      e.preventDefault();
+    });
+  </script>
+</body>
+</html>
