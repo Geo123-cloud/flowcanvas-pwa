@@ -1,0 +1,27 @@
+# Bloquear todos los bots
+User-agent: *
+Disallow: /
+
+# Bloquear específicamente Google
+User-agent: Googlebot
+Disallow: /
+
+# Bloquear Bing
+User-agent: Bingbot
+Disallow: /
+
+# Bloquear Yahoo
+User-agent: Slurp
+Disallow: /
+
+# Bloquear DuckDuckGo
+User-agent: DuckDuckBot
+Disallow: /
+
+# Bloquear Yandex
+User-agent: YandexBot
+Disallow: /
+
+# Bloquear Baidu
+User-agent: Baiduspider
+Disallow: /
